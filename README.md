@@ -130,7 +130,16 @@ Good for beginners in India
 
 ## Stack 
 Frontend : Streamlit
+Streamlit can be used as the frontend UI because it allows you to build web dashboards using Python, which is very useful when the project contains machine learning, prediction, and data visualization.
+
 Backend : Python Flask
+Python Flask is used as the backend framework because the project requires integration of machine learning models, database operations, and API communication
+
 ML Models : Scikit-learn + TensorFlow
+Regression Models for predictions , NLP for AI report generation
+
 Database : MySQL
-Authentication : 
+MySQL is used as the database because the project requires reliable storage of user financial data, investment records, authentication details, and AI-generated reports. MySQL provides secure, structured, and efficient data management, which is suitable for a web-based financial tracking application.
+
+Authentication : JWT (JSON Web Token)
+JWT is a secure method to authenticate users by generating a token (digital key) after login, which is used to verify the user in future requests.
