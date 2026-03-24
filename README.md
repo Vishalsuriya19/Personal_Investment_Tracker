@@ -128,6 +128,12 @@ Focused on mutual fund investments
 Easy SIP tracking
 Good for beginners in India
 
+3. Finary
+Tracks all assets (stocks, crypto, real estate, bank accounts)
+Real-time performance + analytics
+Portfolio diversification insights
+Supports multiple global platforms
+
 ## Stack 
 Frontend : Streamlit
 Streamlit can be used as the frontend UI because it allows you to build web dashboards using Python, which is very useful when the project contains machine learning, prediction, and data visualization.
