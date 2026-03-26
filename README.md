@@ -1,151 +1,306 @@
-# Personal Investment Tracker
-Personal Investment Tracker is a web-based AI-powered financial management application that analyzes an individual's income, expenses, savings, loans, and current investments to generate risk-aware investment recommendations.
-The system uses machine learning models to predict future prices of commodities such as stocks, gold, and silver, and provides personalized guidance through an AI-generated report showing future investment plans and expected growth of current investments.
-The application also includes an interactive dashboard to monitor savings, expenses, portfolio distribution, predictions, and investment recommendations.
+# 📈 AI Personal Investment Tracker
 
-## User Flows
-Step 1 — User Registration / Login
-User opens the web application.
+A production-grade web application for managing investments with AI-powered predictions and portfolio analysis.
 
-Flow:
-User enters username and password
-If new user → Register account
-If existing user → Login
+## 🎯 Features
 
+- **User Authentication**: Secure registration and login with JWT tokens
+- **Portfolio Management**: Add and manage investments
+- **ML Predictions**: AI-powered price predictions and risk scoring
+- **NLP Report Generation**: Automated AI-based portfolio analysis
+- **Data Visualization**: Interactive charts and dashboard
+- **MySQL Database**: Persistent data storage
+- **RESTful API**: Flask backend with clean architecture
 
-Step 2 — Enter Personal Financial Details
-User fills financial profile form.
+## 🏗️ Architecture
 
-Inputs:
-Monthly income
-Current savings
-Current loans / EMI
-Medical expenses
-Food expenses
-Transport expenses
-Other expenses
-Current investments (Gold / Stocks / Silver / Shares)
+```
+Frontend (Streamlit)
+    ↓
+Backend API (Flask)
+    ↓
+ML Models (Scikit-learn)
+    ↓
+Database (MySQL)
+```
 
-Purpose:
-Understand financial condition
-Calculate available investment amount
-Calculate risk level
+## 📁 Project Structure
 
-Output:
-Financial profile stored in database
+```
+investment_tracker/
+├── frontend/
+│   ├── app.py              # Streamlit UI
+│   └── __init__.py
+├── backend/
+│   ├── app.py              # Flask application
+│   ├── routes.py           # API endpoints
+│   ├── auth.py             # Authentication logic
+│   ├── jwt_utils.py        # JWT token handling
+│   ├── db.py               # Database connection
+│   └── __init__.py
+├── ml_models/
+│   ├── train_model.py      # Model training
+│   ├── predict.py          # Prediction service
+│   ├── nlp_report.py       # Report generation
+│   └── __init__.py
+├── database/
+│   └── schema.sql          # Database schema
+├── config.py               # Configuration
+├── requirements.txt        # Dependencies
+└── README.md              # This file
+```
 
-Step 3 — Risk Factor Calculation
-System analyzes financial data.
+## 🚀 Quick Start
 
-Process:
-Calculate total expenses
-Calculate savings ratio
-Check loan burden
-Check emergency balance
+### Prerequisites
 
-Risk Levels:
-Low Risk → Safe investor
-Medium Risk → Balanced investor
-High Risk → Aggressive investor
+- Python 3.8+
+- MySQL 5.7+
+- Git
 
-Output:
-Risk score
-Risk category
+### Installation
 
-Used by:
-Recommendation engine
-AI report
-Dashboard
+1. **Clone/Setup Project**
+```bash
+cd investment_tracker
+```
 
-Step 4 — Current Investment Analysis
-System checks existing investments.
+2. **Create Virtual Environment**
+```bash
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# macOS/Linux
+source venv/bin/activate
+```
 
-System calculates:
-Total investment
-Investment distribution
-Growth potential
+3. **Install Dependencies**
+```bash
+pip install -r requirements.txt
+```
 
-Purpose:
-Understand portfolio balance
-Detect over-risk / under-investment
+4. **Create Database**
 
+Connect to MySQL and run:
+```bash
+mysql -u root -p < database/schema.sql
+```
 
-System predicts future prices using ML.
+Or create database manually:
+```bash
+mysql -u root -p
+CREATE DATABASE investment_tracker;
+USE investment_tracker;
+# Then paste contents of database/schema.sql
+```
 
-Prediction for:
-Gold price
-Silver price
-Stock price
+5. **Configure Environment**
 
-Model used:
-Regression
-LSTM / Transformer
-Ensemble model
+Create `.env` file in root directory:
+```env
+# Database
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=investment_tracker
+DB_PORT=3306
 
-Output:
-Future price graph
-Expected return %
-Buy / Hold / Sell suggestion
+# Flask
+FLASK_SECRET_KEY=your-secret-key
+FLASK_ENV=development
+FLASK_PORT=5000
 
-Purpose:
-Used for recommendation
-Used for AI report
+# JWT
+JWT_SECRET_KEY=your-jwt-secret
 
-Step 6 — Investment Recommendation Engine
-System generates recommendation based on:
+# API
+API_BASE_URL=http://localhost:5000
+```
 
-Risk level
-Savings
-Market prediction
-Current investments
+### Running the Application
 
+**Terminal 1 - Start Backend API:**
+```bash
+python backend/app.py
+```
+API will run on `http://localhost:5000`
 
+**Terminal 2 - Train ML Models:**
+```bash
+python ml_models/train_model.py
+```
 
-Purpose:
-Guide future investments
+**Terminal 3 - Start Frontend:**
+```bash
+streamlit run frontend/app.py
+```
+UI will open at `http://localhost:8501`
 
-Step 7 — AI Report Generation
-System generates financial guidance report.
+## 📚 API Endpoints
 
-Report includes:
-User financial summary
-Risk level
-Current investment growth
-Future prediction
-Recommended investment plan
-Expected portfolio growth
+### Authentication
+- `POST /api/register` - Register new user
+- `POST /api/login` - Login and get JWT token
 
+### Portfolio
+- `GET /api/portfolio` - Get user's investments
+- `POST /api/add_investment` - Add new investment
 
-## Alternatives & Competition
-1. INDmoney
-Tracks stocks, mutual funds, EPF, US stocks
-Shows net worth in one dashboard
-Gives tax & profit insights
-Popular in India (recommended)
+### Predictions
+- `POST /api/predict` - Generate predictions
 
-2. Wealth Tracker
-Focused on mutual fund investments
-Easy SIP tracking
-Good for beginners in India
+### Reports
+- `GET /api/report` - Get latest report
+- `POST /api/generate_report` - Generate new report
 
-3. Finary
-Tracks all assets (stocks, crypto, real estate, bank accounts)
-Real-time performance + analytics
-Portfolio diversification insights
-Supports multiple global platforms
+### Health
+- `GET /api/health` - API health check
 
-## Stack 
-Frontend : Streamlit
-Streamlit can be used as the frontend UI because it allows you to build web dashboards using Python, which is very useful when the project contains machine learning, prediction, and data visualization.
+## 🔐 Authentication
 
-Backend : Python Flask
-Python Flask is used as the backend framework because the project requires integration of machine learning models, database operations, and API communication
+All protected endpoints require JWT token in header:
+```bash
+Authorization: Bearer <your_jwt_token>
+```
 
-ML Models : Scikit-learn + TensorFlow
-Regression Models for predictions , NLP for AI report generation
+## 🤖 Machine Learning Models
 
-Database : MySQL
-MySQL is used as the database because the project requires reliable storage of user financial data, investment records, authentication details, and AI-generated reports. MySQL provides secure, structured, and efficient data management, which is suitable for a web-based financial tracking application.
+### Price Prediction (Regression)
+- Uses RandomForest or GradientBoosting
+- Predicts 30-day price outlook
+- Features: days_held, market_sentiment, volatility, volume, RSI
 
-Authentication : JWT (JSON Web Token)
-JWT is a secure method to authenticate users by generating a token (digital key) after login, which is used to verify the user in future requests.
+### Risk Scoring
+- Analyzes portfolio concentration
+- Calculates overall risk level (Low/Medium/High)
+- Provides risk score 0-100
+
+### NLP Report Generation
+- Generates insights from predictions
+- Provides actionable recommendations
+- Includes portfolio summary and outlook
+
+## 📊 Database Schema
+
+### users
+- id, name, email, password_hash, timestamps
+
+### investments
+- id, user_id, stock_name, quantity, purchase_price, amount, date, timestamp
+
+### predictions
+- id, user_id, stock_name, current_price, predicted_price, risk_level, profit_probability, date
+
+### reports
+- id, user_id, report_text, risk_assessment, recommendations, date, timestamp
+
+## 🧪 Testing
+
+### Health Check
+```bash
+curl http://localhost:5000/api/health
+```
+
+### Register User
+```bash
+curl -X POST http://localhost:5000/api/register \
+  -H "Content-Type: application/json" \
+  -d '{"name":"John","email":"john@example.com","password":"SecurePass123"}'
+```
+
+### Login
+```bash
+curl -X POST http://localhost:5000/api/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"john@example.com","password":"SecurePass123"}'
+```
+
+## 📈 Usage Flow
+
+1. **Register/Login** - Create account or login
+2. **Add Investments** - Input your stock holdings
+3. **View Dashboard** - See portfolio summary
+4. **Generate Predictions** - Get AI price forecasts
+5. **Review Report** - Read AI-generated analysis
+6. **Make Decisions** - Use insights for portfolio management
+
+## ⚙️ Configuration
+
+Edit `config.py` to customize:
+- Database credentials
+- JWT settings
+- API URLs
+- ML model parameters
+- Application ports
+
+## 🐛 Troubleshooting
+
+### Database Connection Error
+- Ensure MySQL is running
+- Check credentials in config.py or .env
+- Verify database exists
+
+### API Connection Error (from Streamlit)
+- Check if Flask backend is running
+- Verify API_BASE_URL in config.py
+- Check CORS settings
+
+### ML Model Issues
+- Run `python ml_models/train_model.py` to retrain
+- Check pickle files exist in ml_models/
+
+## 📝 Development Notes
+
+- Keep backend and frontend separate for scalability
+- ML models can be retrained independently
+- Database schema supports future extensions
+- JWT tokens expire after 24 hours (configurable)
+- All passwords are hashed using Werkzeug
+
+## 🔒 Security Features
+
+- Password hashing with Werkzeug
+- JWT-based authentication
+- Input validation on all endpoints
+- CORS enabled for frontend communication
+- SQL injection protection via parameterized queries
+
+## 📦 Dependencies
+
+Key packages:
+- Flask 2.3.3 - Backend framework
+- Streamlit 1.27.0 - Frontend framework
+- MySQL Connector Python - Database
+- Scikit-learn 1.3.0 - ML models
+- PyJWT 2.8.1 - Authentication
+
+## 🚀 Deployment
+
+For production:
+1. Use environment variables for sensitive data
+2. Set `FLASK_ENV=production`
+3. Use WSGI server (gunicorn, uWSGI)
+4. Enable HTTPS
+5. Use managed database service
+6. Implement proper logging and monitoring
+
+## 📄 License
+
+MIT License
+
+## 👨‍💼 About
+
+Built as a comprehensive example of modern full-stack application architecture combining:
+- Web framework (Flask)
+- UI framework (Streamlit)
+- Machine Learning (Scikit-learn)
+- Database (MySQL)
+- Authentication (JWT)
+
+## 📞 Support
+
+For issues or questions, refer to documentation in code comments.
+
+---
+
+**Happy Investing! 🚀📈**
